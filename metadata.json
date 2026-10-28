@@ -1,0 +1,8 @@
+{
+  "name": "Invoicy",
+  "description": "Professional commercial business receipt and customer order management system for small and medium enterprises with offline storage, real-time calculations, and PDF generation.",
+  "requestFramePermissions": [],
+  "majorCapabilities": [
+    "MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"
+  ]
+}

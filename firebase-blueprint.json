@@ -1,0 +1,111 @@
+{
+  "entities": {
+    "BusinessProfile": {
+      "title": "BusinessProfile",
+      "description": "User business identity, logo, tax configuration and payment instructions",
+      "type": "object",
+      "properties": {
+        "name": { "type": "string", "maxLength": 150 },
+        "tagline": { "type": "string", "maxLength": 200 },
+        "phone": { "type": "string", "maxLength": 50 },
+        "email": { "type": "string", "maxLength": 100 },
+        "address": { "type": "string", "maxLength": 300 },
+        "website": { "type": "string", "maxLength": 150 },
+        "taxNumber": { "type": "string", "maxLength": 50 },
+        "currencySymbol": { "type": "string", "maxLength": 10 },
+        "currencyCode": { "type": "string", "maxLength": 10 },
+        "defaultTaxRate": { "type": "number" },
+        "paymentInstructions": { "type": "string", "maxLength": 1000 },
+        "footerNote": { "type": "string", "maxLength": 500 },
+        "theme": { "type": "string", "enum": ["light", "dark"] },
+        "logoUrl": { "type": "string", "maxLength": 500000 },
+        "updatedAt": { "type": "string", "format": "date-time" }
+      },
+      "required": ["name", "currencySymbol"]
+    },
+    "Receipt": {
+      "title": "Receipt",
+      "description": "Commercial receipt or tax invoice issued to a customer",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string", "maxLength": 128 },
+        "receiptNumber": { "type": "string", "maxLength": 64 },
+        "customerId": { "type": "string", "maxLength": 128 },
+        "customerName": { "type": "string", "maxLength": 150 },
+        "customerPhone": { "type": "string", "maxLength": 50 },
+        "customerEmail": { "type": "string", "maxLength": 100 },
+        "customerAddress": { "type": "string", "maxLength": 300 },
+        "createdAt": { "type": "string", "format": "date-time" },
+        "dueDate": { "type": "string" },
+        "eventDate": { "type": "string" },
+        "packageTitle": { "type": "string", "maxLength": 150 },
+        "items": { "type": "array" },
+        "subtotal": { "type": "number" },
+        "taxRate": { "type": "number" },
+        "taxAmount": { "type": "number" },
+        "discountType": { "type": "string", "enum": ["percentage", "fixed"] },
+        "discountValue": { "type": "number" },
+        "discountAmount": { "type": "number" },
+        "grandTotal": { "type": "number" },
+        "amountPaid": { "type": "number" },
+        "balanceDue": { "type": "number" },
+        "paymentStatus": { "type": "string", "enum": ["PAID", "UNPAID", "PARTIAL"] },
+        "paymentMethod": { "type": "string" },
+        "notes": { "type": "string", "maxLength": 2000 },
+        "receiptType": { "type": "string", "enum": ["RECEIPT", "INVOICE", "BILL"] },
+        "userId": { "type": "string", "maxLength": 128 },
+        "updatedAt": { "type": "string", "format": "date-time" }
+      },
+      "required": ["receiptNumber", "customerName", "grandTotal", "paymentStatus"]
+    },
+    "Customer": {
+      "title": "Customer",
+      "description": "Commercial client and contact records",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string", "maxLength": 128 },
+        "name": { "type": "string", "maxLength": 150 },
+        "phone": { "type": "string", "maxLength": 50 },
+        "email": { "type": "string", "maxLength": 100 },
+        "address": { "type": "string", "maxLength": 300 },
+        "taxNumber": { "type": "string", "maxLength": 50 },
+        "notes": { "type": "string", "maxLength": 1000 },
+        "createdAt": { "type": "string", "format": "date-time" },
+        "userId": { "type": "string", "maxLength": 128 }
+      },
+      "required": ["name"]
+    },
+    "ProductPreset": {
+      "title": "ProductPreset",
+      "description": "Pre-configured line items and menu presets",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string", "maxLength": 128 },
+        "name": { "type": "string", "maxLength": 150 },
+        "category": { "type": "string", "maxLength": 100 },
+        "unitPrice": { "type": "number" },
+        "unit": { "type": "string", "maxLength": 50 },
+        "userId": { "type": "string", "maxLength": 128 }
+      },
+      "required": ["name", "unitPrice"]
+    }
+  },
+  "firestore": {
+    "/users/{userId}/profile/business": {
+      "schema": "BusinessProfile",
+      "description": "User business profile settings"
+    },
+    "/users/{userId}/receipts/{receiptId}": {
+      "schema": "Receipt",
+      "description": "User receipts and invoices"
+    },
+    "/users/{userId}/customers/{customerId}": {
+      "schema": "Customer",
+      "description": "User customer contacts"
+    },
+    "/users/{userId}/presets/{presetId}": {
+      "schema": "ProductPreset",
+      "description": "User line item catalogue"
+    }
+  }
+}
